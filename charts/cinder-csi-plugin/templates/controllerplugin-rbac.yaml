@@ -4,13 +4,13 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: csi-cinder-controller-sa
+  name: {{ include "cinder-csi.name" . }}-controller-sa
   namespace: {{ .Release.Namespace }}
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-attacher-role
+  name: {{ include "cinder-csi.name" . }}-attacher-role
 rules:
   - apiGroups: [""]
     resources: ["persistentvolumes"]
@@ -31,21 +31,21 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-attacher-binding
+  name: {{ include "cinder-csi.name" . }}-attacher-binding
 subjects:
   - kind: ServiceAccount
-    name: csi-cinder-controller-sa
+    name: {{ include "cinder-csi.name" . }}-controller-sa
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: csi-attacher-role
+  name: {{ include "cinder-csi.name" . }}-attacher-role
   apiGroup: rbac.authorization.k8s.io
 ---
 # external Provisioner
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-provisioner-role
+  name: {{ include "cinder-csi.name" . }}-provisioner-role
 rules:
   - apiGroups: [""]
     resources: ["persistentvolumes"]
@@ -78,21 +78,21 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-provisioner-binding
+  name: {{ include "cinder-csi.name" . }}-provisioner-binding
 subjects:
   - kind: ServiceAccount
-    name: csi-cinder-controller-sa
+    name: {{ include "cinder-csi.name" . }}-controller-sa
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: csi-provisioner-role
+  name: {{ include "cinder-csi.name" . }}-provisioner-role
   apiGroup: rbac.authorization.k8s.io
 
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-snapshotter-role
+  name: {{ include "cinder-csi.name" . }}-snapshotter-role
 rules:
   - apiGroups: [""]
     resources: ["events"]
@@ -120,20 +120,20 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-snapshotter-binding
+  name: {{ include "cinder-csi.name" . }}-snapshotter-binding
 subjects:
   - kind: ServiceAccount
-    name: csi-cinder-controller-sa
+    name: {{ include "cinder-csi.name" . }}-controller-sa
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: csi-snapshotter-role
+  name: {{ include "cinder-csi.name" . }}-snapshotter-role
   apiGroup: rbac.authorization.k8s.io
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-resizer-role
+  name: {{ include "cinder-csi.name" . }}-resizer-role
 rules:
   # The following rule should be uncommented for plugins that require secrets
   # for provisioning.
@@ -162,13 +162,13 @@ rules:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: csi-resizer-binding
+  name: {{ include "cinder-csi.name" . }}-resizer-binding
 subjects:
   - kind: ServiceAccount
-    name: csi-cinder-controller-sa
+    name: {{ include "cinder-csi.name" . }}-controller-sa
     namespace: {{ .Release.Namespace }}
 roleRef:
   kind: ClusterRole
-  name: csi-resizer-role
+  name: {{ include "cinder-csi.name" . }}-resizer-role
   apiGroup: rbac.authorization.k8s.io
 ---

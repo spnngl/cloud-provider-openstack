@@ -20,7 +20,7 @@ spec:
       annotations:
         {{- include "cinder-csi.nodeplugin.podAnnotations" . | nindent 8 }}
     spec:
-      serviceAccount: csi-cinder-node-sa
+      serviceAccount: {{ include "cinder-csi.name" . }}-cinder-node-sa
       hostNetwork: true
       dnsPolicy: {{ .Values.csi.plugin.nodePlugin.dnsPolicy }}
       containers:
