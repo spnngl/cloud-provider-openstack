@@ -1,4 +1,4 @@
-{{- if .Values.csi.plugin.podMonitor.enabled }}
+{{- if and (.Values.csi.plugin.controllerPlugin.enable) (.Values.csi.plugin.podMonitor.enabled) }}
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:

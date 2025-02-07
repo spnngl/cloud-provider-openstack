@@ -1,3 +1,4 @@
+{{- if .Values.csi.plugin.controllerPlugin.enable }}
 # This YAML file contains RBAC API objects,
 # which are necessary to run csi controller plugin
 
@@ -172,3 +173,4 @@ roleRef:
   name: {{ include "cinder-csi.name" . }}-resizer-role
   apiGroup: rbac.authorization.k8s.io
 ---
+{{- end }}

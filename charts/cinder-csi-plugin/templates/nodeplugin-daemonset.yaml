@@ -1,3 +1,4 @@
+{{- if .Values.csi.plugin.nodePlugin.enable }}
 kind: DaemonSet
 apiVersion: apps/v1
 metadata:
@@ -21,7 +22,7 @@ spec:
         {{- include "cinder-csi.nodeplugin.podAnnotations" . | nindent 8 }}
     spec:
       serviceAccount: {{ include "cinder-csi.name" . }}-cinder-node-sa
-      hostNetwork: true
+      hostNetwork: {{ .Values.csi.plugin.nodePlugin.hostNetwork }}
       dnsPolicy: {{ .Values.csi.plugin.nodePlugin.dnsPolicy }}
       containers:
         - name: node-driver-registrar
@@ -89,6 +90,7 @@ spec:
             - /bin/cinder-csi-plugin
             - "-v={{ .Values.logVerbosityLevel }}"
             - "--endpoint=$(CSI_ENDPOINT)"
+            - "--provide-node-service=true"
             - "--provide-controller-service=false"
             - "--cloud-config=$(CLOUD_CONFIG)"
             {{- if .Values.csi.plugin.extraArgs }}
@@ -177,3 +179,4 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+{{- end }}

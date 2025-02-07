@@ -5,6 +5,8 @@ fullnameOverride: ""
 timeout: 3m
 
 csi:
+  driver:
+    install: true
   attacher:
     image:
       repository: registry.k8s.io/sig-storage/csi-attacher
@@ -75,6 +77,8 @@ csi:
         mountPath: /etc/kubernetes
         readOnly: true
     nodePlugin:
+      enable: true
+      hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       # Optional additional annotations to add to the nodePlugin Pods.
       podAnnotations: {}
@@ -98,6 +102,7 @@ csi:
       #     hostnames:
       #     - "keystone.hostname.com"
     controllerPlugin:
+      enable: true
       replicas: 1
       strategy:
         # RollingUpdate strategy replaces old pods with new ones gradually,

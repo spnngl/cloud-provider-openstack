@@ -1,3 +1,4 @@
+{{- if .Values.csi.plugin.controllerPlugin.enable }}
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -172,6 +173,7 @@ spec:
             - "--cloud-config=$(CLOUD_CONFIG)"
             - "--cluster=$(CLUSTER_NAME)"
             - "--provide-node-service=false"
+            - "--provide-controller-service=true"
             {{- if .Values.csi.plugin.httpEndpoint.enabled }}
             - "--http-endpoint=:{{ .Values.csi.plugin.httpEndpoint.port }}"
             {{- end }}
@@ -247,3 +249,4 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+{{- end }}
