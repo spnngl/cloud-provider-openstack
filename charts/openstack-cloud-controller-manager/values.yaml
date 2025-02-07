@@ -110,6 +110,8 @@ secret:
 # for description of individual verbosity levels.
 logVerbosityLevel: 2
 
+hostNetwork: true
+
 # Specify settings with the same key as the CCM config: https://github.com/kubernetes/cloud-provider-openstack/blob/master/docs/openstack-cloud-controller-manager/using-openstack-cloud-controller-manager.md#config-openstack-cloud-controller-manager
 cloudConfig:
   global:
