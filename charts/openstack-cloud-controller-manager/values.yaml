@@ -92,6 +92,7 @@ controllerExtraArgs: {}
 serviceMonitor: {}
 # serviceMonitor:
 #   enabled: true
+#   port: 10258
 #   additionalLabels: {}
 
 # Create a secret resource cloud-config (or other name) to store credentials and settings from cloudConfig

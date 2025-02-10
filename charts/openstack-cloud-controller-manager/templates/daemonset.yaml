@@ -56,8 +56,10 @@ spec:
             - --controllers={{- trimAll "," (include "occm.enabledControllers" . ) -}}
             {{- if .Values.serviceMonitor.enabled }}
             - --bind-address=0.0.0.0
+            - --secure-port={{ .Values.serviceMonitor.port }}
             {{- else }}
             - --bind-address=127.0.0.1
+            - --secure-port=0
             {{- end }}
             {{- if .Values.controllerExtraArgs }}
             {{- with .Values.controllerExtraArgs }}
@@ -66,8 +68,8 @@ spec:
             {{- end }}
           {{- if .Values.serviceMonitor.enabled }}
           ports:
-          - containerPort: 10258
-            hostPort: 10258
+          - containerPort: {{ .Values.serviceMonitor.port }}
+            hostPort: {{ .Values.serviceMonitor.port }}
             name: http
             protocol: TCP
           {{- end }}
